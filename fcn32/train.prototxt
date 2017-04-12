@@ -5,8 +5,8 @@ layer {
   top: "label"
   python_param {
     module: "satellite_layers"
-    layer: "SatelliteSegDataLayer"
-    param_str: "{\'context_dir\': \'../data/mass_merged/lmdb/train_map\', \'seed\': 1337, \'voc_dir\': \'../data/mass_merged/lmdb/train_sat\'}"
+    layer: "SatelliteDataLayer"
+    param_str: "{\'data_set\': \'train\', \'seed\': 1337, \'output_dir\': \'../data/mass_merged/train/map\', \'input_dir\': \'../data/mass_merged/train/sat\'}"
   }
 }
 layer {

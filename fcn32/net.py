@@ -11,12 +11,12 @@ def conv_relu(bottom, nout, ks=3, stride=1, pad=1):
 def max_pool(bottom, ks=2, stride=2):
     return L.Pooling(bottom, pool=P.Pooling.MAX, kernel_size=ks, stride=stride)
 
-def fcn(set):
+def fcn(dataset):
     n = caffe.NetSpec()
     n.data, n.label = L.Python(module='satellite_layers',
-            layer='SatelliteSegDataLayer', ntop=2,
-            param_str=str(dict(voc_dir='../data/mass_merged/lmdb/'+set+'_sat',
-                context_dir='../data/mass_merged/lmdb/'+set+'_map', seed=1337)))
+            layer='SatelliteDataLayer', ntop=2,
+            param_str=str(dict(input_dir='../data/mass_merged/'+dataset+'/sat',
+                output_dir='../data/mass_merged/'+dataset+'/map', seed=1337, data_set=dataset)))
 
     # the base net
     n.conv1_1, n.relu1_1 = conv_relu(n.data, 64, pad=100)
