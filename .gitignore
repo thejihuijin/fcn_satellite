@@ -1,3 +1,4 @@
 *.pyc
 
 data
+ilsvrc-nets/vgg16-fcn.caffemodel

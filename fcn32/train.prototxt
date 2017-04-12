@@ -4,9 +4,9 @@ layer {
   top: "data"
   top: "label"
   python_param {
-    module: "pascalcontext_layers"
-    layer: "PASCALContextSegDataLayer"
-    param_str: "{\'context_dir\': \'../../data/pascal-context\', \'seed\': 1337, \'split\': \'train\', \'voc_dir\': \'../../data/pascal\'}"
+    module: "satellite_layers"
+    layer: "SatelliteSegDataLayer"
+    param_str: "{\'context_dir\': \'../data/mass_merged/lmdb/train_map\', \'seed\': 1337, \'voc_dir\': \'../data/mass_merged/lmdb/train_sat\'}"
   }
 }
 layer {
