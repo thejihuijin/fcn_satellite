@@ -26,8 +26,8 @@ interp_layers = [k for k in solver.net.params.keys() if 'up' in k]
 surgery.interp(solver.net, interp_layers)
 
 # scoring
-#val = np.loadtxt('../data/pascal/VOC2010/ImageSets/Main/val.txt', dtype=str)
+val = np.loadtxt('../data/mass_merged/valid/sat/valid.txt', dtype=str)
 
 for _ in range(50):
     solver.step(8000)
-    #score.seg_tests(solver, False, val, layer='score')
+    score.seg_tests(solver, False, val, layer='score')

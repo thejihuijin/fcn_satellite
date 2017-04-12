@@ -84,6 +84,7 @@ class SatelliteDataLayer(caffe.Layer):
 
         in_ = in_[:,0:200,0:200]
         label = label[:,0:200,0:200]
+
         print '----------------------------------------------'
         print in_.shape
         print label.shape
