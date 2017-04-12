@@ -17,8 +17,7 @@ class SatelliteDataLayer(caffe.Layer):
         self.random = params.get('randomize', True)
         self.seed = params.get('seed', None)
         self.data_set = params.get('data_set')
-
-        print self.data_set
+        self.text_ind = self.input_dir+'/'+self.data_set+'.txt'
 
         # two tops: data and label
         if len(top) != 2:
@@ -27,16 +26,12 @@ class SatelliteDataLayer(caffe.Layer):
         if len(bottom) != 0:
             raise Exception("Do not define a bottom.")
 
-        raise Exception('stopped')
-
         # load indices for images and labels
-        split_f  = '{}/ImageSets/Main/{}.txt'.format(self.input_dir,
-                self.split)
-        self.indices = open(split_f, 'r').read().splitlines()
+        self.indices = open(self.text_ind, 'r').read().splitlines()
         self.idx = 0
 
         # make eval deterministic
-        if self.data_set == 'valid'
+        if self.data_set == 'valid':
             self.random = False
 
         # randomization: seed and pick
@@ -75,27 +70,22 @@ class SatelliteDataLayer(caffe.Layer):
         - switch channels RGB -> BGR
         - subtract mean
         - transpose to channel x height x width order
+        Load output image (no preprocess)
         """
-        im = Image.open('{}/JPEGImages/{}.jpg'.format(self.input_dir, idx))
+        self.idx = 0
+
+        im = Image.open('{}/{}.tiff'.format(self.input_dir, idx[:-5]))
         in_ = np.array(im, dtype=np.float32)
         in_ = in_[:,:,::-1]
         in_ -= self.mean
         in_ = in_.transpose((2,0,1))
 
-        label = np.array(Image.open('{}/JPEGImages/{}.jpg'.format(self.output_dir, idx)),dtype=np.float32)
+        label = np.array(Image.open('{}/{}.png'.format(self.output_dir, idx[:-5])),dtype=np.float32).transpose((2,0,1))/255.0
 
+        in_ = in_[:,0:200,0:200]
+        label = label[:,0:200,0:200]
+        print '----------------------------------------------'
+        print in_.shape
+        print label.shape
+        print '----------------------------------------------'
         return in_,label
-
-    def load_label(self, idx):
-        """
-        Load label image as 1 x height x width integer array of label indices.
-        The leading singleton dimension is required by the loss.
-        The full 400 labels are translated to the 59 class task labels.
-        """
-        label_400 = scipy.io.loadmat('{}/trainval/{}.mat'.format(self.output_dir, idx))['LabelMap']
-        label = np.zeros_like(label_400, dtype=np.uint8)
-        for idx, l in enumerate(self.labels_59):
-            idx_400 = self.labels_400.index(l) + 1
-            label[label_400 == idx_400] = idx + 1
-        label = label[np.newaxis, ...]
-        return label
