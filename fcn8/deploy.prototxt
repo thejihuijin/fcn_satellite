@@ -1,12 +1,11 @@
 layer {
-  name: "data"
-  type: "Python"
+  name: "input"
+  type: "Input"
   top: "data"
-  top: "label"
-  python_param {
-    module: "satellite_layers"
-    layer: "SatelliteDataLayer"
-    param_str: "{\'data_set\': \'valid\', \'seed\': 1337, \'output_dir\': \'../data/mass_merged/valid/map\', \'input_dir\': \'../data/mass_merged/valid/sat\'}"
+  input_param {
+    # These dimensions are purely for sake of example;
+    # see infer.py for how to reshape the net to the given input size.
+    shape { dim: 1 dim: 3 dim: 500 dim: 500 }
   }
 }
 layer {
@@ -507,24 +506,9 @@ layer {
   }
 }
 layer {
-  name: "scale_pool4"
-  type: "Scale"
-  bottom: "pool4"
-  top: "scale_pool4"
-  param {
-    lr_mult: 0
-  }
-  scale_param {
-    filler {
-      type: "constant"
-      value: 0.01
-    }
-  }
-}
-layer {
   name: "score_pool4"
   type: "Convolution"
-  bottom: "scale_pool4"
+  bottom: "pool4"
   top: "score_pool4"
   param {
     lr_mult: 1
@@ -577,24 +561,9 @@ layer {
   }
 }
 layer {
-  name: "scale_pool3"
-  type: "Scale"
-  bottom: "pool3"
-  top: "scale_pool3"
-  param {
-    lr_mult: 0
-  }
-  scale_param {
-    filler {
-      type: "constant"
-      value: 0.0001
-    }
-  }
-}
-layer {
   name: "score_pool3"
   type: "Convolution"
-  bottom: "scale_pool3"
+  bottom: "pool3"
   top: "score_pool3"
   param {
     lr_mult: 1
@@ -655,16 +624,5 @@ layer {
   crop_param {
     axis: 2
     offset: 31
-  }
-}
-layer {
-  name: "loss"
-  type: "SoftmaxWithLoss"
-  bottom: "score"
-  bottom: "label"
-  top: "loss"
-  loss_param {
-    ignore_label: 255
-    normalize: false
   }
 }

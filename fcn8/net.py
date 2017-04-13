@@ -18,7 +18,7 @@ def fcn(dataset):
             param_str=str(dict(input_dir='../data/mass_merged/'+dataset+'/sat',
                 output_dir='../data/mass_merged/'+dataset+'/map', seed=1337, data_set=dataset)))
 
-    # the base net
+       # the base net
     n.conv1_1, n.relu1_1 = conv_relu(n.data, 64, pad=100)
     n.conv1_2, n.relu1_2 = conv_relu(n.relu1_1, 64)
     n.pool1 = max_pool(n.relu1_2)
@@ -55,10 +55,7 @@ def fcn(dataset):
             bias_term=False),
         param=[dict(lr_mult=0)])
 
-    # scale pool4 skip for compatibility
-    n.scale_pool4 = L.Scale(n.pool4, filler=dict(type='constant',
-        value=0.01), param=[dict(lr_mult=0)])
-    n.score_pool4 = L.Convolution(n.scale_pool4, num_output=3, kernel_size=1, pad=0,
+    n.score_pool4 = L.Convolution(n.pool4, num_output=3, kernel_size=1, pad=0,
         param=[dict(lr_mult=1, decay_mult=1), dict(lr_mult=2, decay_mult=0)])
     n.score_pool4c = crop(n.score_pool4, n.upscore2)
     n.fuse_pool4 = L.Eltwise(n.upscore2, n.score_pool4c,
@@ -68,10 +65,7 @@ def fcn(dataset):
             bias_term=False),
         param=[dict(lr_mult=0)])
 
-    # scale pool3 skip for compatibility
-    n.scale_pool3 = L.Scale(n.pool3, filler=dict(type='constant',
-        value=0.0001), param=[dict(lr_mult=0)])
-    n.score_pool3 = L.Convolution(n.scale_pool3, num_output=3, kernel_size=1, pad=0,
+    n.score_pool3 = L.Convolution(n.pool3, num_output=3, kernel_size=1, pad=0,
         param=[dict(lr_mult=1, decay_mult=1), dict(lr_mult=2, decay_mult=0)])
     n.score_pool3c = crop(n.score_pool3, n.upscore_pool4)
     n.fuse_pool3 = L.Eltwise(n.upscore_pool4, n.score_pool3c,

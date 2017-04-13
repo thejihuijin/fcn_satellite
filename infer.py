@@ -17,7 +17,7 @@ caffe.set_device(int(sys.argv[1]))
 caffe.set_mode_gpu()
 
 # load net
-net = caffe.Net('fcn32/deploy.prototxt', 'fcn32/snapshot/train_iter_5000.caffemodel', caffe.TEST)
+net = caffe.Net('fcn8/deploy.prototxt', 'fcn8/snapshot/train_iter_100.caffemodel', caffe.TEST)
 # shape for input (data blob is N x C x H x W), set data
 net.blobs['data'].reshape(1, *in_.shape)
 net.blobs['data'].data[...] = in_
@@ -25,9 +25,5 @@ print '-------------------------------------------------------------------------
 # run net and take argmax for prediction
 net.forward()
 print '------------------------------------------------------------------------------------------'
-out = net.blobs['score'].data[0].argmax(axis=0)
-print out.shape
-print np.amin(out)
-print np.amax(out)
-
-print out
+out = net.blobs['score'].data[0]
+print out[0:3,0:3,:]
