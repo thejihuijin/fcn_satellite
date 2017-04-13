@@ -13,7 +13,7 @@ class SatelliteDataLayer(caffe.Layer):
         params = eval(self.param_str)
         self.input_dir = params['input_dir']
         self.output_dir = params['output_dir']
-        self.mean = np.array((76.7005894, 78.12125889, 67.95231933), dtype=np.float32)
+        self.mean = np.array((95.58390035,97.0751154,89.11036257), dtype=np.float32)
         self.random = params.get('randomize', True)
         self.seed = params.get('seed', None)
         self.data_set = params.get('data_set')
@@ -72,7 +72,7 @@ class SatelliteDataLayer(caffe.Layer):
         - transpose to channel x height x width order
         Load output image (no preprocess)
         """
-        self.idx = 0
+
         im = Image.open('{}/{}.tiff'.format(self.input_dir, idx[:-5]))
         in_ = np.array(im, dtype=np.float32)
         in_ = in_[:,:,::-1]
@@ -80,6 +80,7 @@ class SatelliteDataLayer(caffe.Layer):
         in_ = in_.transpose((2,0,1))
 
         label = np.array(Image.open('{}/{}.png'.format(self.output_dir, idx[:-5])),dtype=np.float32).transpose((2,0,1))/255.0
+        label = label[0,:,:]*0.0 + label[1,:,:]*1.0+ label[2,:,:]*2.0
 
         in_,label = self.random_patch(in_,label)
 
@@ -88,4 +89,4 @@ class SatelliteDataLayer(caffe.Layer):
     def random_patch(self,img,lbl,h=400,w=400, sz = 1500):
         x = random.randint(0, sz-h)
         y = random.randint(0, sz-w)
-        return img[:,x:x+h,y:y+w], lbl[0,x:x+h,y:y+w]+lbl[1,x:x+h,y:y+w]*1.0 + lbl[2,x:x+h,y:y+w]
+        return img[:,x:x+h,y:y+w], lbl[x:x+h,y:y+w]
