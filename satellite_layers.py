@@ -73,7 +73,6 @@ class SatelliteDataLayer(caffe.Layer):
         Load output image (no preprocess)
         """
         self.idx = 0
-
         im = Image.open('{}/{}.tiff'.format(self.input_dir, idx[:-5]))
         in_ = np.array(im, dtype=np.float32)
         in_ = in_[:,:,::-1]
@@ -82,11 +81,11 @@ class SatelliteDataLayer(caffe.Layer):
 
         label = np.array(Image.open('{}/{}.png'.format(self.output_dir, idx[:-5])),dtype=np.float32).transpose((2,0,1))/255.0
 
-        in_ = in_[:,0:200,0:200]
-        label = label[0,0:200,0:200]+ label[1,0:200,0:200]*1.0 + label[2,0:200,0:200]*2.0
+        in_,label = self.random_patch(in_,label)
 
-        print '----------------------------------------------'
-        print in_.shape
-        print label.shape
-        print '----------------------------------------------'
         return in_,label
+
+    def random_patch(self,img,lbl,h=400,w=400, sz = 1500):
+        x = random.randint(0, sz-h)
+        y = random.randint(0, sz-w)
+        return img[:,x:x+h,y:y+w], lbl[0,x:x+h,y:y+w]+lbl[1,x:x+h,y:y+w]*1.0 + lbl[2,x:x+h,y:y+w]

@@ -1,4 +1,4 @@
 *.pyc
 *.caffemodel
+*.solverstate
 data
-ilsvrc-nets/vgg16-fcn.caffemodel
