@@ -20,3 +20,11 @@ Data preparation:
   ls>{train/valid/test}.txt
   # remove filename from end of txt files above
   ```
+Convert VGG16 to VGG16-FCN weights:
+  ```bash
+  cd ilsvrc-nets
+  # download weights
+  vim caffemodel_url #follow link and name convention in file
+  # convert VGG16 weights
+  python convert2fcn.py
+  ```
