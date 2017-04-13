@@ -6,8 +6,7 @@ def compute_mean(my_dir,n=20):
 
 	allfiles=os.listdir(my_dir)
 	imlist=[filename for filename in allfiles if  filename[-5:] in [".tiff"]]
-	imlist = sorted(imlist)
-	imlist = imlist[:n]
+	imlist = sorted(imlist)[:n]
 
 	avg = numpy.zeros(3)
 
@@ -16,4 +15,4 @@ def compute_mean(my_dir,n=20):
 
 	print avg
 
-compute_mean('../data/mass_merged/train/sat/')
+compute_mean('data/mass_merged/train/sat/')

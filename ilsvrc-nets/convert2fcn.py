@@ -14,7 +14,7 @@ fc_params = {pr: (net.params[pr][0].data, net.params[pr][1].data) for pr in para
 for fc in params:
     print '{} weights are {} dimensional and biases are {} dimensional'.format(fc, fc_params[fc][0].shape, fc_params[fc][1].shape)
 
-net_full_conv = caffe.Net('train.prototxt', 
+net_full_conv = caffe.Net('fcn.prototxt', 
                           caffe.TEST)
 
 params_full_conv = ['fc6', 'fc7']
