@@ -79,15 +79,15 @@ class SatelliteDataLayer(caffe.Layer):
         in_ -= self.mean
         in_ = in_.transpose((2,0,1))
 
-        label = np.array(Image.open('{}/{}.png'.format(self.output_dir, idx[:-5])),dtype=np.float32).transpose((2,0,1))/255.0
-        label = label[0,:,:]*0.0 + label[1,:,:]*1.0+ label[2,:,:]*2.0
+        label = np.array(Image.open('{}/{}.png'.format(self.output_dir, idx[:-5])),dtype=np.int32).transpose((2,0,1))/255
+        label = label[0,:,:]*0 + label[1,:,:]*1+ label[2,:,:]*255
 
         in_,label = self.random_patch(in_,label)
 
 
         return in_,label
 
-    def random_patch(self,img,lbl,h=400,w=400, sz = 1500):
+    def random_patch(self,img,lbl,h=256,w=256, sz = 1500):
         x = random.randint(0, sz-h)
         y = random.randint(0, sz-w)
         return img[:,x:x+h,y:y+w], lbl[x:x+h,y:y+w]

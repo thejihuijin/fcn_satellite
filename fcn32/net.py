@@ -18,7 +18,7 @@ def fcn(dataset):
             param_str=str(dict(input_dir='../data/mass_merged/'+dataset+'/sat',
                 output_dir='../data/mass_merged/'+dataset+'/map', seed=1337, data_set=dataset)))
 
-       # the base net
+    # the base net
     n.conv1_1, n.relu1_1 = conv_relu(n.data, 64, pad=100)
     n.conv1_2, n.relu1_2 = conv_relu(n.relu1_1, 64)
     n.pool1 = max_pool(n.relu1_2)
@@ -50,35 +50,13 @@ def fcn(dataset):
 
     n.score_fr = L.Convolution(n.drop7, num_output=3, kernel_size=1, pad=0,
         param=[dict(lr_mult=1, decay_mult=1), dict(lr_mult=2, decay_mult=0)])
-    n.upscore2 = L.Deconvolution(n.score_fr,
-        convolution_param=dict(num_output=3, kernel_size=4, stride=2,
+    n.upscore = L.Deconvolution(n.score_fr,
+        convolution_param=dict(num_output=3, kernel_size=64, stride=32,
             bias_term=False),
         param=[dict(lr_mult=0)])
-
-    n.score_pool4 = L.Convolution(n.pool4, num_output=3, kernel_size=1, pad=0,
-        param=[dict(lr_mult=1, decay_mult=1), dict(lr_mult=2, decay_mult=0)])
-    n.score_pool4c = crop(n.score_pool4, n.upscore2)
-    n.fuse_pool4 = L.Eltwise(n.upscore2, n.score_pool4c,
-            operation=P.Eltwise.SUM)
-    n.upscore_pool4 = L.Deconvolution(n.fuse_pool4,
-        convolution_param=dict(num_output=3, kernel_size=4, stride=2,
-            bias_term=False),
-        param=[dict(lr_mult=0)])
-
-    n.score_pool3 = L.Convolution(n.pool3, num_output=3, kernel_size=1, pad=0,
-        param=[dict(lr_mult=1, decay_mult=1), dict(lr_mult=2, decay_mult=0)])
-    n.score_pool3c = crop(n.score_pool3, n.upscore_pool4)
-    n.fuse_pool3 = L.Eltwise(n.upscore_pool4, n.score_pool3c,
-            operation=P.Eltwise.SUM)
-    n.upscore8 = L.Deconvolution(n.fuse_pool3,
-        convolution_param=dict(num_output=3, kernel_size=16, stride=8,
-            bias_term=False),
-        param=[dict(lr_mult=0)])
-
-    n.score = crop(n.upscore8, n.data)
+    n.score = crop(n.upscore, n.data)
     n.loss = L.SoftmaxWithLoss(n.score, n.label,
             loss_param=dict(normalize=False, ignore_label=255))
-
 
     return n.to_proto()
 
