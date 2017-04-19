@@ -2,7 +2,7 @@
 Path setup:
 
   ```bash
-  export PYTHONPATH="[path]/fcn_satellite:$PYTHONPATH"
+  export PYTHONPATH="[path]/fcn_satellite/helper:$PYTHONPATH"
   ```
 
 Data preparation:

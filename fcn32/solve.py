@@ -28,6 +28,6 @@ surgery.interp(solver.net, interp_layers)
 # scoring
 val = np.loadtxt('../data/mass_merged/valid/sat/valid.txt', dtype=str)
 
-for _ in range(100000):
+for _ in range(1000):
 	score.seg_tests(solver, False, val, layer='score')
-	solver.step(1)
+	solver.step(100)
