@@ -63,7 +63,7 @@ class SatelliteDataLayer(caffe.Layer):
     def backward(self, top, propagate_down, bottom):
         pass
 
-    def load_image(self, idx):
+    def load_image(self, idx, p = .8):
         """
         Load input image and preprocess for Caffe:
         - cast to float
@@ -72,7 +72,6 @@ class SatelliteDataLayer(caffe.Layer):
         - transpose to channel x height x width order
         Load output image (no preprocess)
         """
-        idx = self.indices[0]
 
         im = Image.open('{}/{}.tiff'.format(self.input_dir, idx[:-5]))
         in_ = np.array(im, dtype=np.float32)
@@ -81,21 +80,24 @@ class SatelliteDataLayer(caffe.Layer):
         in_ = in_.transpose((2,0,1))
 
         label = np.array(Image.open('{}/{}.png'.format(self.output_dir, idx[:-5])),dtype=np.int32).transpose((2,0,1))/255
-        label = label[0,:,:]*0 + label[1,:,:]*1+ label[2,:,:]*255
 
+        if self.data_set == 'valid':
+            label = label[2,:,:]*0+label[0,:,:]*1 + label[1,:,:]*2
+        else:
+            label = label[2,:,:]*np.random.binomial(1, p, label.shape[1:3])*255+label[0,:,:]*1 + label[1,:,:]*2
 
-        if not (self.data_set == 'valid'):
-            in_,label = self.random_patch(in_,label)
+        in_,label = self.random_patch(in_,label)
 
+        label = label[np.newaxis, ...]
 
         return in_,label
-
-    def random_patch(self,img,lbl,h=256,w=256, sz = 1500):
+    def random_patch(self,img,lbl,h=200,w=200, sz = 1500):
 
         x = random.randint(0, sz-h)
         y = random.randint(0, sz-w)
 
-        x = 0
-        y = 0
+        if self.data_set == 'valid':
+            x = 0
+            y = 0
 
         return img[:,x:x+h,y:y+w], lbl[x:x+h,y:y+w]

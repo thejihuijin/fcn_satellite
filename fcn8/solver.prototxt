@@ -1,6 +1,6 @@
 train_net: "train.prototxt"
 test_net: "val.prototxt"
-test_iter: 5105
+test_iter: 736
 # make test net, but don't invoke it from the solver itself
 test_interval: 999999999
 display: 100
@@ -14,6 +14,6 @@ momentum: 0.9
 iter_size: 1
 max_iter: 100000
 weight_decay: 0.0005
-snapshot: 2000
+snapshot: 10000
 snapshot_prefix: "snapshot/train"
 test_initialization: false

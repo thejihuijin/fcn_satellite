@@ -15,7 +15,7 @@ except:
 weights = '../ilsvrc-nets/vgg16fc.caffemodel'
 
 # init
-caffe.set_device(int(sys.argv[1]))
+caffe.set_device(0)
 caffe.set_mode_gpu()
 
 solver = caffe.SGDSolver('solver.prototxt')
