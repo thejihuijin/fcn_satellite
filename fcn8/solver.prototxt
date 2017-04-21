@@ -15,5 +15,5 @@ iter_size: 1
 max_iter: 300000
 weight_decay: 0.0005
 snapshot: 10000
-snapshot_prefix: "masked/train"
+snapshot_prefix: "snapshot/train"
 test_initialization: false
