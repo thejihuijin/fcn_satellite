@@ -28,3 +28,6 @@ Convert VGG16 to VGG16-FCN weights:
   # convert VGG16 weights
   python convert2fcn.py
   ```
+
+  Training FCN8:
+  p = .8 in satellite_layers.py

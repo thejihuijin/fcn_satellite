@@ -63,7 +63,7 @@ class SatelliteDataLayer(caffe.Layer):
     def backward(self, top, propagate_down, bottom):
         pass
 
-    def load_image(self, idx, p = .8):
+    def load_image(self, idx, p = 0):
         """
         Load input image and preprocess for Caffe:
         - cast to float
@@ -91,7 +91,7 @@ class SatelliteDataLayer(caffe.Layer):
         label = label[np.newaxis, ...]
 
         return in_,label
-    def random_patch(self,img,lbl,h=200,w=200, sz = 1500):
+    def random_patch(self,img,lbl,h=300,w=300, sz = 1500):
 
         x = random.randint(0, sz-h)
         y = random.randint(0, sz-w)

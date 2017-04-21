@@ -19,7 +19,7 @@ caffe.set_device(0)
 caffe.set_mode_gpu()
 
 # load net
-net = caffe.Net('fcn8/deploy.prototxt', 'fcn8/snapshot/train_iter_100000.caffemodel', caffe.TEST)
+net = caffe.Net('fcn8/deploy.prototxt', 'fcn8/masked/snapshot/train_iter_80000.caffemodel', caffe.TEST)
 # shape for input (data blob is N x C x H x W), set data
 net.blobs['data'].reshape(1, *img.shape)
 net.blobs['data'].data[...] = img
