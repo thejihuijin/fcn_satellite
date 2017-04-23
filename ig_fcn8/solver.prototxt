@@ -3,16 +3,16 @@ test_net: "val.prototxt"
 test_iter: 736
 # make test net, but don't invoke it from the solver itself
 test_interval: 999999999
-display: 100
-average_loss: 100
+display: 1000
+average_loss: 1000
 lr_policy: "fixed"
-# lr for unnormalized softmax
-base_lr: 1e-10
+# lr
+base_lr: 5e-7
 # high momentum
-momentum: 0.9
+momentum: 0.99
 # no gradient accumulation
 iter_size: 1
-max_iter: 300000
+max_iter: 100000
 weight_decay: 0.0005
 snapshot: 10000
 snapshot_prefix: "snapshot/train"

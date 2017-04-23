@@ -80,11 +80,7 @@ class SatelliteDataLayer(caffe.Layer):
         in_ = in_.transpose((2,0,1))
 
         label = np.array(Image.open('{}/{}.png'.format(self.output_dir, idx[:-5])),dtype=np.int32).transpose((2,0,1))/255
-
-        if self.data_set == 'valid':
-            label = label[2,:,:]*0+label[0,:,:]*1 + label[1,:,:]*2
-        else:
-            label = label[2,:,:]*np.random.binomial(1, p, label.shape[1:3])*255+label[0,:,:]*1 + label[1,:,:]*2
+        label = label[2,:,:]*0+label[0,:,:]*1 + label[1,:,:]*2
 
         in_,label = self.random_patch(in_,label)
 

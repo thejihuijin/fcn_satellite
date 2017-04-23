@@ -9,7 +9,7 @@ import sys
 # load image, switch to BGR, subtract mean, and make dims C x H x W for Caffe
 raw_img = Image.open('data/mass_merged/test/sat/22828930_15.tiff')
 img = np.array(raw_img, dtype=np.float32)
-img = img[0:400,0:400,:] # subsample
+img = img[0:500,0:500,:] # subsample
 img = img[:,:,::-1]
 img -= np.array((80.76832175,82.40158693,73.67652711))
 img = img.transpose((2,0,1))
@@ -19,7 +19,7 @@ caffe.set_device(0)
 caffe.set_mode_gpu()
 
 # load net
-net = caffe.Net('fcn8/deploy.prototxt', 'fcn8/masked/snapshot/train_iter_80000.caffemodel', caffe.TEST)
+net = caffe.Net('ig_fcn8/deploy.prototxt', 'ig_fcn8/snapshot/1_5_5/train_iter_100000.caffemodel', caffe.TEST)
 # shape for input (data blob is N x C x H x W), set data
 net.blobs['data'].reshape(1, *img.shape)
 net.blobs['data'].data[...] = img
@@ -37,5 +37,5 @@ scipy.misc.imsave('outfile.jpg', img)
 
 im = Image.open('data/mass_merged/test/map/22828930_15.png')
 in_ = np.array(im, dtype=np.float32)
-in_ = in_[0:400,0:400,:]
+in_ = in_[0:500,0:500,:]
 scipy.misc.imsave('outfile2.jpg', in_)

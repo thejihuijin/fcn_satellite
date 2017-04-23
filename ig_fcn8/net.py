@@ -85,13 +85,11 @@ def fcn(dataset):
     n.score = crop(n.upscore8, n.data)
 
     n.loss = L.InfogainLoss(n.score, n.label,
-            loss_param=dict(normalize=False, ignore_label=255),
+            loss_param=dict(normalization=False, ignore_label=255),
             infogain_loss_param=dict(source="infogainH.binaryproto"))
 
 
-    #[cost of predicting 1 when gt is 0,    cost of predicting 0 when gt is 0
-    # cost of predicting 1 when gt is 1,    cost of predicting 0 when gt is 1]
-    H = np.array([[1,0,0],[0,5,0],[0,0,10]])
+    H = np.array([[1,0,0],[0,10.0,0],[0,0,5.0]],dtype = 'f4')
     blob = caffe.io.array_to_blobproto( H.reshape( (1,1,3,3) ) )
     with open( 'infogainH.binaryproto', 'wb' ) as f :
         f.write( blob.SerializeToString() )
