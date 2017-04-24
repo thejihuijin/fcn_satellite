@@ -33,7 +33,7 @@ img[out == 0,2] = 255
 img[out == 1,0] = 255
 img[out == 2,1] = 255
 
-scipy.misc.imsave('examples/net_1_10_5.jpg', img)
+scipy.misc.imsave('examples/net.jpg', img)
 
 im = Image.open('data/mass_merged/test/map/22828930_15.png')
 in_ = np.array(im, dtype=np.float32)
