@@ -1,3 +1,5 @@
+#https://github.com/shelhamer/fcn.berkeleyvision.org
+
 import caffe
 import numpy as np
 from caffe import layers as L, params as P
