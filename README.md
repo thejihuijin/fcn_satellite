@@ -1,9 +1,11 @@
-Implementation of a 3 class (background, roads, buildings) semantic segmentation for aerial satelite images using a FCN architecture and Caffe. The end goal of the segmentation is region proposals for 3D points clouds. The network is accordingly tuned to overpredict roads and building because the cost for predicting background when the true class is roads or building is very high.
+Implementation of a 3 class (background, roads, buildings) semantic segmentation for aerial satelite images using a FCN architecture and Caffe. 
+
+The end goal of the segmentation is region proposals for 3D points clouds. The network is accordingly tuned to overpredict roads and building because the cost for predicting background when the true class is roads or building is very high for this specific application.
 
 
-The following repositories were used:
-1. https://github.com/shelhamer/fcn.berkeleyvision.org
-2. https://github.com/mitmul/ssa
+Significant portions of the following repositories were used:
+1. https://github.com/shelhamer/fcn.berkeleyvision.org (FCN architecture)
+2. https://github.com/mitmul/ssa (data download and pre-processing)
 
 Path setup:
 
@@ -26,15 +28,28 @@ Data preparation:
   ls>{train/valid/test}.txt
   # remove filename from end of txt files above
   ```
-Download VGG Conv Weights:
+Download VGGconv weights (alternatively generate yourself):
   ```bash
   cd ilsvrc-nets
   # download weights
-  vim caffemodel_url #follow link and name convention in file
+  vim caffemodel_url # follow link and name convention in file
   ```
-Generate Net and Train:
+
+Generate net and train:
   ```bash
   cd ig_fcn8
-  python net.py # Optionally change the H matrix
+  python net.py # optionally change the H matrix
   python solve.py
+  ```
+
+Download deploy weights:
+  ```bash
+  cd models
+  # download weights
+  vim caffemodel_url # follow link and name convention in file
+  ```
+
+Run model on custom image:
+  ```bash
+  python infer.py # change image file names
   ```
