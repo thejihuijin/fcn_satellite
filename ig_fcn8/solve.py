@@ -34,4 +34,4 @@ val = np.loadtxt('../data/mass_merged/valid/sat/valid.txt', dtype=str)
 
 for _ in range(100):
 	score.seg_tests(solver, False, val, layer='score')
-	solver.step(1000)
+	solver.step(500)

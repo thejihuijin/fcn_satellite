@@ -89,7 +89,7 @@ def fcn(dataset):
             infogain_loss_param=dict(source="infogainH.binaryproto"))
 
 
-    H = np.array([[1,0,0],[0,10.0,0],[0,0,5.0]],dtype = 'f4')
+    H = np.array([[1,0,0],[0,7.0,0],[0,0,1.5]],dtype = 'f4')
     blob = caffe.io.array_to_blobproto( H.reshape( (1,1,3,3) ) )
     with open( 'infogainH.binaryproto', 'wb' ) as f :
         f.write( blob.SerializeToString() )
