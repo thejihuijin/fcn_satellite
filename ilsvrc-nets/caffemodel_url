@@ -1,4 +1,3 @@
-http://www.robots.ox.ac.uk/~vgg/software/very_deep/caffe/VGG_ILSVRC_16_layers.caffemodel
+https://www.dropbox.com/s/4blysagn7ussf1m/vgg16fc.caffemodel?dl=0
 
-
-rename vgg16.caffemodel
+rename vgg16fc.caffemodel

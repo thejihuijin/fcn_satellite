@@ -7,7 +7,7 @@ display: 1000
 average_loss: 1000
 lr_policy: "fixed"
 # lr
-base_lr: 5e-7
+base_lr: 1e-6
 # high momentum
 momentum: 0.99
 # no gradient accumulation

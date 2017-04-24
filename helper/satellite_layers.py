@@ -87,6 +87,7 @@ class SatelliteDataLayer(caffe.Layer):
         label = label[np.newaxis, ...]
 
         return in_,label
+        
     def random_patch(self,img,lbl,h=300,w=300, sz = 1500):
 
         x = random.randint(0, sz-h)

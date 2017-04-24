@@ -1,3 +1,9 @@
+Implementation of a 3 class (background, roads, buildings) semantic segmentation for aerial satelite images using a FCN architecture and Caffe. The end goal of the segmentation is region proposals for 3D points clouds. The network is accordingly tuned to overpredict roads and building because the cost for predicting background when the true class is roads or building is very high.
+
+
+The following repositories were used:
+1. https://github.com/shelhamer/fcn.berkeleyvision.org
+2. https://github.com/mitmul/ssa
 
 Path setup:
 
@@ -20,14 +26,15 @@ Data preparation:
   ls>{train/valid/test}.txt
   # remove filename from end of txt files above
   ```
-Convert VGG16 to VGG16-FCN weights:
+Download VGG Conv Weights:
   ```bash
   cd ilsvrc-nets
   # download weights
   vim caffemodel_url #follow link and name convention in file
-  # convert VGG16 weights
-  python convert2fcn.py
   ```
-
-  Training FCN8:
-  p = .8 in satellite_layers.py
+Generate Net and Train:
+  ```bash
+  cd ig_fcn8
+  python net.py # Optionally change the H matrix
+  python solve.py
+  ```
