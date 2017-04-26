@@ -1,7 +1,6 @@
+**WARNING: The end goal of the segmentation is region proposals for 3D points clouds. The network is accordingly tuned to overpredict roads and building because the cost for incorrectly predicting is very high for this specific application. This can be seen in action in the examples directory.**
+
 Implementation of a 3 class (background, roads, buildings) semantic segmentation for aerial satelite images using a FCN architecture and Caffe. 
-
-The end goal of the segmentation is region proposals for 3D points clouds. The network is accordingly tuned to overpredict roads and building because the cost for predicting background when the true class is roads or building is very high for this specific application. This can be seen in action in the examples directory.
-
 
 Significant portions of the following repositories were used:
 1. https://github.com/shelhamer/fcn.berkeleyvision.org (FCN architecture)
