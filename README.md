@@ -35,21 +35,22 @@ Download VGGconv weights (alternatively generate yourself):
   vim caffemodel_url # follow link and name convention in file
   ```
 
-Generate net and train:
+[ig_fcn8] Train weights:
   ```bash
   cd ig_fcn8
-  python net.py # optionally change the H matrix
+  python H.py # optionally change the H  matrix
+  python net.py
   python solve.py
   ```
 
-Download deploy weights:
+[ig_fcn8] Download pre-trained weights:
   ```bash
-  cd models
+  cd ig_fcn8
   # download weights
   vim caffemodel_url # follow link and name convention in file
   ```
 
-Run model on custom image:
+Run model on input image:
   ```bash
   python infer.py # change image file names
   ```

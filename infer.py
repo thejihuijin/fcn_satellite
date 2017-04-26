@@ -19,7 +19,7 @@ caffe.set_device(0)
 caffe.set_mode_gpu()
 
 # load net
-net = caffe.Net('ig_fcn8/deploy.prototxt', 'models/deploy.caffemodel', caffe.TEST)
+net = caffe.Net('ig_fcn8/deploy.prototxt', 'ig_fcn8/deploy.caffemodel', caffe.TEST)
 # shape for input (data blob is N x C x H x W), set data
 net.blobs['data'].reshape(1, *img.shape)
 net.blobs['data'].data[...] = img
@@ -39,3 +39,9 @@ im = Image.open('data/mass_merged/test/map/22828930_15.png')
 in_ = np.array(im, dtype=np.float32)
 in_ = in_[0:500,0:500,:]
 scipy.misc.imsave('examples/gt.jpg', in_)
+
+
+im = Image.open('data/mass_merged/test/sat/22828930_15.tiff')
+in_ = np.array(im, dtype=np.float32)
+in_ = in_[0:500,0:500,:]
+scipy.misc.imsave('examples/sat.jpg', in_)
