@@ -1,4 +1,4 @@
-**WARNING: The end goal of the segmentation is region proposals for 3D points clouds. The network is not tuned for pixelwise accuracy. Instead, the network is tuned to overpredict roads and buildings because the cost for incorrectly labeling a pixel is very high for this specific application. This can be seen in action in the examples directory.**
+**WARNING: The end goal of the segmentation is region proposals for 3D points clouds. The network is not tuned for pixelwise accuracy. Instead, the network is tuned to overpredict roads and buildings because the cost for incorrectly labeling a pixel as background is very high for this specific application. This can be seen in action in the examples directory.**
 
 Implementation of a 3 class (background, roads, buildings) semantic segmentation for aerial satelite images using a FCN architecture and Caffe. 
 
